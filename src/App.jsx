@@ -1,28 +1,31 @@
-import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Hero from './components/Hero';
+import NavBar from './components/NavBar';
+import TaskForm from './components/TaskForm';
+import ResultsViewer from './components/ResultsViewer';
+import Monitoring from './components/Monitoring';
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Vibe Coding Platform
-        </h1>
-        <p className="text-gray-600 mb-6">
-          Your AI-powered development environment
-        </p>
-        <div className="text-center">
-          <button
-            onClick={() => setCount(count + 1)}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-          >
-            Count is {count}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
+function Container({ children }) {
+  return <div className="max-w-6xl mx-auto px-4 md:px-6 py-8">{children}</div>;
 }
 
-export default App
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-gray-50 text-gray-900">
+        <NavBar />
+        <Hero />
+        <Container>
+          <Routes>
+            <Route path="/" element={<TaskForm />} />
+            <Route path="/results" element={<ResultsViewer />} />
+            <Route path="/monitoring" element={<Monitoring />} />
+          </Routes>
+        </Container>
+        <footer className="mt-auto py-8 text-center text-xs text-gray-500">Built for the Distributed Task Network</footer>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;
